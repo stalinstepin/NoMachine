@@ -1,0 +1,39 @@
+---
+
+- hosts: localhost
+  gather_facts: False
+  become: yes
+  become_user: root
+  tasks:
+    - name: Setting up key based authentication.
+      authorized_key: user=root exclusive=no key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: Preparing target hosts for NoMachine Deployment.
+  hosts: localhost
+  gather_facts: False
+  tasks:
+
+    - name: Copying NoMachine package to the target machines.
+      copy:
+           src=/tmp/nomachine-enterprise-desktop-evaluation_6.2.4_4_amd64.deb
+           dest=/opt/nomachine-enterprise-desktop-evaluation_6.2.4_4_amd64.deb
+
+    - name: Installing NoMachine on the target machines.
+      command: "dpkg -i /opt/nomachine-enterprise-desktop-evaluation_6.2.4_4_amd64.deb"
+
+    - name: Making sure NXServer is started.
+      service: name=nxserver state=started
+
+    - name: Creating nomachine_license directory under '/opt' 
+      file:
+           path: /opt/nomachine_license
+           state: directory
+
+    ## These are the permanent keys that we get over email once registering.
+#    - name: Extracting and placing the license file on target machines.
+#      unarchive: src=/opt/key.tar.gz dest=/opt/nomachine_license/
+
+    ## Evaluation keys are under BaseDirectory/NX/etc.
+    - name: Applying License on NoMachine Enterprise Desktops.
+      command: "/etc/NX/nxserver --activate /usr/NX/etc/node.lic"
+      command: "/etc/NX/nxserver --activate /usr/NX/etc/server.lic"

@@ -1,0 +1,17 @@
+---
+
+- name: NoMachine Destroy.
+  hosts: localhost
+  gather_facts: False
+  become: yes
+  become_user: root
+  tasks:
+
+    - name: Stopping NoMachine services.
+      service: name=nxserver state=stopped
+
+    - name: Un-installing NoMachine on the target machines.
+      command: "dpkg -r nomachine-enterprise-desktop"
+      command: "dpkg --purge nomachine-enterprise-desktop"
+
+          
