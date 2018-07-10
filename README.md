@@ -28,7 +28,7 @@ Link 2: **[NoMachine Features](https://www.nomachine.com/nomachine-features).**
 ---
 
 
-# Screenshots of Ansible Playbook to Deploy / Activate licence and Destroy NoMachine application. 
+# Screenshots of Ansible Playbook being run to Deploy / Activate licence and Destroy NoMachine application. 
 
 ![](https://2.bp.blogspot.com/-oG70RWUuzVU/W0XGs_vGWEI/AAAAAAAAAeI/_oYauVug4oAqHbMChsSkOSVZcT3v71-AwCLcBGAs/s1600/NoMachine_setup.PNG)
 
